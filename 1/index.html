@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Drum</title>
+	<style type="text/css">
+		html, body {
+			margin: 0;
+		}
+
+		.container {
+			height: 100vh;
+		}
+
+		.mid {
+			position: relative;
+			top: 50%;
+			transform: translateY(-50%);
+
+			margin:0 auto;
+
+			display: flex;
+			display: -webkit-flex; /*safari*/
+			flex-wrap: wrap;
+			justify-content: center;
+		}
+
+		.key {
+			min-width: 100px;
+			padding: 10px;
+			margin: 10px;
+			text-align: center;
+			font-size: 3rem;
+			box-sizing: border-box;
+			cursor: pointer;
+		}
+
+		.active {
+			border: 2px solid;
+			transform: scale(1.2);
+			transition: 0.1s;
+		}
+
+		.title {
+			margin: 0 auto;
+			text-align: center;
+		}
+
+		small {
+			text-align: center;
+			margin: 20px 0;
+			display: block;
+			font-size: 16px;
+		}
+	</style>
+</head>
+<body>
+	<div class='container'>
+
+		<!-- <span><h1>I'm Drum</h1></span> -->
+
+		<div class='mid'>
+			<div class='key' data-keycode='65'>
+				A
+				<small>Boom</small>
+			</div>
+			<div class='key' data-keycode='83'>				
+				S
+				<small>Clap</small>
+			</div>
+			<div class='key' data-keycode='68'>				
+				D
+				<small>Hihat</small>
+			</div>
+			<div class='key' data-keycode='70'>				
+				F
+				<small>Kick</small>
+			</div>
+			<div class='key' data-keycode='74'>				
+				J
+				<small>Ride</small>
+			</div>
+			<div class='key' data-keycode='75'>				
+				K
+				<small>Snare</small>
+			</div>
+			<div class='key' data-keycode='76'>				
+				L
+				<small>Tink</small>
+			</div>
+			<div class='key' data-keycode='186'>				
+				;
+				<small>Tom</small>
+			</div>
+		</div>
+
+		<audio data-keycode='65'><source src="./sounds/boom.wav" type=""></audio>
+		<audio data-keycode='83'><source src="./sounds/clap.wav" type=""></audio>
+		<audio data-keycode='68'><source src="./sounds/hihat.wav" type=""></audio>
+		<audio data-keycode='70'><source src="./sounds/kick.wav" type=""></audio>		
+		<audio data-keycode='74'><source src="./sounds/ride.wav" type=""></audio>
+		<audio data-keycode='75'><source src="./sounds/snare.wav" type=""></audio>
+		<audio data-keycode='76'><source src="./sounds/tink.wav" type=""></audio>
+		<audio data-keycode='186'><source src="./sounds/tom.wav" type=""></audio>
+
+	</div>
+
+
+</body>
+<script type="text/javascript">
+	
+	function drum_play(code){
+		let textNode = document.querySelector(`.key[data-keycode='${code}']`);
+		let audioNode = document.querySelector(`audio[data-keycode='${code}']`);
+		if (textNode && audioNode){
+			audioNode.currentTime = 0;
+			audioNode.play();	
+			textNode.classList.add('active');
+			setTimeout(function(){
+				textNode.classList.remove('active');
+			}, 100);
+		}
+	}	
+
+	function drum_play_click(event){
+		drum_play(this.getAttribute('data-keycode'));
+	}
+
+	function drum_play_keydown(event){
+		drum_play(event.keyCode);
+	}
+
+	document.addEventListener('keydown', drum_play_keydown);
+	document.querySelectorAll('.key').forEach(key => {
+		key.addEventListener('click', drum_play_click);
+	});
+
+</script>
+</html>
