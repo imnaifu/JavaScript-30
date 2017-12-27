@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		
+		body, html { 
+			width: 100%;
+			height: 100%;
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			height: 100vh;
+			width: 100%;
+		}
+
+		.mid {
+			position: relative;
+			top: 50%;
+			transform: translateY(-50%);
+
+			margin:0 auto;
+		}
+
+		.clock {
+			width: 300px;
+			height: 300px;
+			border-radius: 50%; /*50% cirlce*/
+			margin: 0 auto;
+			border: 10px solid;
+			position: relative;
+			background-color: #ff9800;
+		}
+
+		.pointer {
+			position: absolute;
+			height: 50%;
+			left: 50%;
+			background-color: #000;
+			border-radius: 20%;
+			transform-origin: 30% 100%;
+			transform: rotate(40deg);
+		}
+
+		.center {
+			position: absolute;
+			margin: 0 auto;
+			height: 8%;
+			width: 8%;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: #000;
+			border-radius: 50%;	
+		}
+
+		.h {
+			width: 4%;			
+		}
+
+		.m {
+			width: 2%;			
+		}
+
+		.s {
+			width: 1%;			
+		}
+
+
+	</style>
+</head>
+<body>
+	<div class='container'>
+		
+		<div class='mid'>
+				
+			<div class='clock'>
+				<div class='center'></div>
+				<div class='pointer h'></div>
+				<div class='pointer m'></div>
+				<div class='pointer s'></div>
+
+
+			</div>
+
+		</div>
+
+	</div>
+</body>
+
+<script type="text/javascript">
+	
+	setInterval(function(){
+		let d = new Date();
+		let h = d.getHours();
+		let m = d.getMinutes();
+		let s = d.getSeconds();
+
+		let hr = (h/12) * 360;
+		let mr = (m/60) * 360;
+		let sr = (s/60) * 360;
+
+		document.querySelector('.h').style.transform = `rotate(${hr}deg)`;
+		document.querySelector('.m').style.transform = `rotate(${mr}deg)`;
+		document.querySelector('.s').style.transform = `rotate(${sr}deg)`;
+
+	}, 1000)
+
+</script>
+</html>
