@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Canvas</title>
+	<!-- a canvas that can draw line with line-width and line-color auto changes -->
+	<style>
+		html, body {
+			margin:0;
+		}
+	</style>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>	
+	const canvas = document.querySelector('#draw'); //get canvas
+	const ctx = canvas.getContext('2d'); //get content
+	canvas.width = window.innerWidth; //site width to window size
+	canvas.height = window.innerHeight; //site height to window size
+	// ctx.strokeStyle = 'BADA55';
+	ctx.lineJoin = 'round'; //make line smooth
+	ctx.lineCap = 'round'; 
+
+	let canDraw = false;
+	let lastX = 0;
+	let lastY = 0;	
+	let hue = 0;
+	let lineWidth = 10;
+	let lineWidthDirection = 1;
+
+	function draw(e){
+		
+		if(!canDraw){
+			//if not mousedown
+			return false;
+		}
+
+		//set color style
+		ctx.strokeStyle = `hsl(${hue}, 80%, 50%)`;
+		hue++;
+		if (hue >= 360 ){
+			hue = 0;
+		}
+
+		//set width increase or decrease
+		ctx.lineWidth = lineWidth;
+		if (lineWidth > 60){
+			//set direaction to decrease
+			lineWidthDirection = -1;
+		}else if (lineWidth <= 10){
+			//set direction to increase
+			lineWidthDirection = 1;
+		}
+
+		//change the width
+		if (lineWidthDirection === 1){
+			lineWidth++;
+		}else{
+			lineWidth--;
+		}
+
+		ctx.beginPath(); //begin a path
+		ctx.moveTo(lastX, lastY); //move to strat point
+		ctx.lineTo(e.offsetX, e.offsetY); //draw line to end point
+		ctx.stroke(); //actually draw the path
+		[lastX, lastY] = [e.offsetX, e.offsetY]; //set next time start point to this time end point	
+
+	}
+
+	canvas.addEventListener('mousedown', (e) => {
+		canDraw = true;
+		[lastX, lastY] = [e.offsetX, e.offsetY];
+	});
+
+	canvas.addEventListener('mouseup', () => canDraw = false);
+	canvas.addEventListener('mouseout', () => canDraw = false);
+	canvas.addEventListener('mousemove', draw);
+</script>
+</body>
+</html>
