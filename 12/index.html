@@ -8,13 +8,13 @@
 	<h1>Press ILOVENAIFU as many as u can.</h1>
 </body>
 <script>
-	const pressed = [];
-	const code = 'ilovenaifu';
+	const pressed = []; //array saved the pressed key
+	const code = 'ilovenaifu'; 
 	document.addEventListener('keyup', e => {
-		pressed.push(e.key);
-		pressed.splice(-code.length-1, pressed.length - code.length);
+		pressed.push(e.key); //save into array 
+		pressed.splice(-code.length-1, pressed.length - code.length); //slice to remain the lastest 10 digit
 		if (pressed.join('').includes(code)){
-			cornify_add();
+			cornify_add(); //add unicorn!
 		};
 	});
 </script>
