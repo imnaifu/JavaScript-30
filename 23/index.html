@@ -40,7 +40,7 @@
 
   function populateVoices(){
     voices = this.getVoices();
-    console.log(voices);
+    // console.log(voices);
     const voiceOptions = voices.map(voice => {
       return `<option value="${voice.name}">${voice.name}</option>`
     }).join('');
@@ -68,8 +68,14 @@
   voicesDropdown.addEventListener('change', setVoice);
   options.forEach(option => option.addEventListener('change', setOption));
   speakButton.addEventListener('click', toggle);
+
+  // stopButton.addEventListener('click', toggle(false));  
+  /* we can not do this 'toggle(false)' because can not pass parameter */
+  // 1. one way is using bind 'toggle.bind(null, false)'
+  // 2. another way is using error funcion
+  // 3. or function (){ toggle(false) }
   stopButton.addEventListener('click', () => toggle(false));
-  
+
 </script>
 
 </body>
